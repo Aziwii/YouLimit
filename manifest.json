@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "YouLimit",
+  "version": "1.0",
+  "permissions": [
+    "scripting",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "*://*.youtube.com/*"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "ruleset_1",
+      "enabled": true,
+      "path": "rules.json"
+    }]
+  },
+  "content_scripts": [{
+    "matches": ["*://*.youtube.com/*"],
+    "js": ["content.js"],
+    "css": ["styleLimit.css"]
+  }]
+}

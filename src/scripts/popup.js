@@ -28,15 +28,19 @@ function updatePowerUI(enabled) {
 
 // 3. INITIALIZE (The "Main" Logic)
 function init() {
+    
     chrome.storage.local.get(["enabled", "item", "state"], (data) => {
         // Sync Power State
         updatePowerUI(!!data.enabled);
+        document.getElementById('enabled').checked = !!data.enabled;
         
         // Sync Text Inputs
         if (inputItem) inputItem.value = data.item || "";
         if (stateDisplay) stateDisplay.textContent = data.state || "No state set";
     });
 }
+
+document.addEventListener("DOMContentLoaded", init);
 
 // 4. EVENT LISTENERS
 pwrBtn.addEventListener("click", () => {

@@ -1,15 +1,44 @@
 <html lang="en">
-    <head> 
-        <title>Popup</title>
-        <link rel="stylesheet" href="/src/styles/styles.css">
-    </head>
-    <body>
-        <label for="input">
-            <input id="enabled" type="checkbox">
-            <span class="slider round"></span>
-        </label>
+
+<head>
+    <title>Popup</title>
+    <link rel="stylesheet" href="../styles/popup.css">
+</head>
+
+<body>
+    <div class="main-container">
+        <header class="header">
+            <h1>YouLimit</h1>
+            <button id="on-off">On</button>
+            
+        </header>
+        <select id="state">
+                <option value="default">Default</option>
+                <option value="locked">Locked In</option>
+                <option value="leisure">Leisure Mode</option>
+            </select>
+        <div class="toggle-container">
+            <label class="switch">
+                <input id="enabled" type="checkbox">
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="toggle-container">
+            <label class="switch">
+                <input id="enabled" type="checkbox">
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="toggle-container">
+            <label class="switch">
+                <input id="enabled" type="checkbox">
+                <span class="slider round"></span>
+            </label>
+        </div>
+
         <input type="text" class="secret" id="item">
         <script src="popup.js"></script>
-        
-    </body>
+    </div>
+</body>
+
 </html>

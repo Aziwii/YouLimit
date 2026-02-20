@@ -3,14 +3,17 @@
   "name": "YouLimit",
   "version": "1.0",
   "permissions": [
-    "declarativeNetRequest"
+    "declarativeNetRequest",
+    "storage",
+    "scripting"
   ],
   "host_permissions": [
     "*://*.youtube.com/*"
   ],
-  "permissions": [
-    "declarativeNetRequest"
-  ],
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+
   "declarative_net_request": {
     "rule_resources": [{
       "id": "ruleset_1",

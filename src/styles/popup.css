@@ -33,3 +33,24 @@
     background-color: white;
     transition: .4s;
 }
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.secret {
+    margin: 5px;
+    font-size: 12px;
+}

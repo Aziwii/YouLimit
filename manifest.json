@@ -24,6 +24,6 @@
 
   "action": {
     "default_title": "YouLimit",
-    "default_popup": "popup.hmtl"
+    "default_popup": "popup.html"
   }
 }

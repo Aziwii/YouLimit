@@ -30,3 +30,11 @@ input.addEventListener("change", (event) => {
         void chrome.storage.local.set({ "item": event.target.value });
     }
 });
+
+const pwrBtn = document.getElementById("power-toggle");
+pwrBtn.addEventListener("click", () => {
+    
+    pwrBtn.classList.toggle("on");
+    pwrBtn.classList.toggle("off");
+    const enabled = pwrBtn.classList.contains("on");
+});

@@ -25,6 +25,6 @@
   }],
   "action": {
     "default_title": "YouLimit",
-    "default_popup": "popup.html"
+    "default_popup": "scripts/popup.html"
   }
 }

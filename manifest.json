@@ -20,5 +20,10 @@
     "matches": ["*://*.youtube.com/*"],
     "js": ["content.js"],
     "css": ["styleLimit.css"]
-  }]
+  }],
+
+  "action": {
+    "default_title": "YouLimit",
+    "default_popup": "popup.hmtl"
+  }
 }

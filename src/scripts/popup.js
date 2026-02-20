@@ -36,5 +36,10 @@ pwrBtn.addEventListener("click", () => {
     
     pwrBtn.classList.toggle("on");
     pwrBtn.classList.toggle("off");
-    const enabled = pwrBtn.classList.contains("on");
+    
+    if (pwrBtn.classList.contains("on")) {
+        pwrBtn.textContent = "ON";
+    } else {
+        pwrBtn.textContent = "OFF";
+    }
 });

@@ -3,7 +3,6 @@
   "name": "YouLimit",
   "version": "1.0",
   "permissions": [
-    "scripting",
     "declarativeNetRequest"
   ],
   "host_permissions": [
@@ -19,9 +18,8 @@
   "content_scripts": [{
     "matches": ["*://*.youtube.com/*"],
     "js": ["content.js"],
-    "css": ["styleLimit.css"]
+    "css": ["content.css"]
   }],
-
   "action": {
     "default_title": "YouLimit",
     "default_popup": "popup.html"

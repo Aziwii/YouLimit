@@ -8,17 +8,20 @@
   "host_permissions": [
     "*://*.youtube.com/*"
   ],
+  "permissions": [
+    "declarativeNetRequest"
+  ],
   "declarative_net_request": {
     "rule_resources": [{
       "id": "ruleset_1",
       "enabled": true,
-      "path": "rules.json"
+      "path": "rules/rules.json"
     }]
   },
   "content_scripts": [{
     "matches": ["*://*.youtube.com/*"],
-    "js": ["content.js"],
-    "css": ["content.css"]
+    "js": ["scripts/content.js"],
+    "css": ["styles/content.css"]
   }],
   "action": {
     "default_title": "YouLimit",

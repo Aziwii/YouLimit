@@ -10,31 +10,29 @@
         <header class="header">
             <h1>YouLimit</h1>
             <button id="power-toggle" class="off">Off</button>
-            
+
         </header>
         <select id="state">
-                <option value="default">Default</option>
-                <option value="locked">Locked In</option>
-                <option value="leisure">Leisure Mode</option>
-            </select>
-        <div class="toggle-container">
-            <label class="switch">
-                <input id="enabled" type="checkbox">
-                <span class="slider round"></span>
-            </label>
-        </div>
-        <div class="toggle-container">
-            <label class="switch">
-                <input id="enabled" type="checkbox">
-                <span class="slider round"></span>
-            </label>
-        </div>
-        <div class="toggle-container">
-            <label class="switch">
-                <input id="enabled" type="checkbox">
-                <span class="slider round"></span>
-            </label>
-        </div>
+            <option value="default">Default</option>
+            <option value="locked">Locked In</option>
+            <option value="leisure">Leisure Mode</option>
+        </select>
+        <section class="toggle-buttons">
+            <div class="toggle-container">
+                <label class="switch">
+                    <input id="hide-home" type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+                <label for="hide-home">Hide Home Page</label>
+            </div>
+            <div class="toggle-container">
+                <label class="switch">
+                    <input id="hide-shorts" type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+                <label for="hide-shorts">Hide Shorts</label>
+            </div>
+        </section>
         <script src="popup.js"></script>
     </div>
 </body>

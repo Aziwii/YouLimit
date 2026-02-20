@@ -12,9 +12,22 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     height: 100%;
     width: 100%;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.header h1 {
+    font-size: 24px;
+    margin: 0;
+    padding: 10px;
+    color: #333;
+    align-content: flex-start;
 }
 
 .tabs-container {
@@ -36,9 +49,11 @@ body {
     cursor: pointer;
     border: none;
     border-radius: 8px;
+    align-content: flex-end;
     transition: all 0.3s ease;
     /* Makes the "glow" fade in smoothly */
     outline: none;
+    margin: 10px;
 }
 
 .off {

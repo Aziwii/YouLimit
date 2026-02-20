@@ -8,25 +8,25 @@ function setBadgeText(enabled) {
 }
 
 const checkbox = document.getElementById("enabled");
-chrome.storage.sync.get("enabled", (data) => {
+chrome.storage.local.get("enabled", (data) => {
     checkbox.checked = !!data.enabled;
     void setBadgeText(checkbox.checked);
 });
 
 checkbox.addEventListener("change", (event) => {
     if (event.target instanceof HTMLInputElement) {
-        void chrome.storage.sync.set({ "enabled": event.target.checked });
+        void chrome.storage.local.set({ "enabled": event.target.checked });
         void setBadgeText(event.target.checked);
     }
 });
 
 const input = document.getElementById("item");
-chrome.storage.sync.get("item", (data) => {
+chrome.storage.local.get("item", (data) => {
     input.value = data.item || "";
 });
 
 input.addEventListener("change", (event) => {
     if (event.target instanceof HTMLInputElement) {
-        void chrome.storage.sync.set({ "item": event.target.value });
+        void chrome.storage.local.set({ "item": event.target.value });
     }
 });

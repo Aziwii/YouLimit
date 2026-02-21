@@ -17,21 +17,29 @@
             <option value="locked">Locked In</option>
             <option value="leisure">Leisure Mode</option>
         </select>
-        <section class="toggle-buttons">
-            <div class="toggle-container">
-                <label class="switch">
-                    <input id="hide-home" type="checkbox">
-                    <span class="slider round"></span>
-                </label>
-                <label for="hide-home">Hide Home Page</label>
-            </div>
-            <div class="toggle-container">
-                <label class="switch">
-                    <input id="hide-shorts" type="checkbox">
-                    <span class="slider round"></span>
-                </label>
-                <label for="hide-shorts">Hide Shorts</label>
-            </div>
+        <section id="default-view" class="default-view">
+            <section class="toggle-buttons">
+                <div class="toggle-container">
+                    <label class="switch">
+                        <input id="hide-home" type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                    <label for="hide-home">Hide Home Page</label>
+                </div>
+                <div class="toggle-container">
+                    <label class="switch">
+                        <input id="hide-shorts" type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                    <label for="hide-shorts">Hide Shorts</label>
+                </div>
+            </section>
+        </section>
+        <section id="locked-view" class="locked-view">
+            <p>You are locked tf in</p>
+        </section>
+        <section id="leisure-view" class="leisure-view">
+            <p>you are leisured tf in</p>
         </section>
     </div>
     <script src="popup.js"></script>

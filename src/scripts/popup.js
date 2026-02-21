@@ -38,7 +38,14 @@ function restoreCheckBoxStates() {
         });
 }
 
+function switchView(state) {
+    document.getElementById("default-view").classList.toggle("hidden", state !== "default");
+    document.getElementById("locked-view").classList.toggle("hidden", state !== "locked");
+    document.getElementById("leisure-view").classList.toggle("hidden", state !== "leisure");
+}
+
 function applyState(state) {
+    switchView(state);
     //apply the change in state in logic
     if (state === "locked") {
         saveCheckBoxStates();
@@ -121,7 +128,7 @@ function init() {
         stateDisplay.value = state;
 
         // Write defaults to storage if first load
-        chrome.storage.local.set({ enabled, hideHome, hideShorts });
+        chrome.storage.local.set({ enabled, hideHome, hideShorts, state });
 
         // Paint UI with actual values
         updatePowerUI(enabled);

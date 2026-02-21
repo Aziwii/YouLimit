@@ -38,6 +38,52 @@ body {
     display: none;
 }
 
+.hidden {
+    display: none;
+}
+#default-view {
+    display: flex;
+    background-color: lightblue;
+}
+
+#default-view.hidden {
+    display: none;
+}
+
+#locked-view {
+    display: flex;
+    background-color: lightsalmon;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-content: center;
+}
+
+#locked-view.hidden {
+    display: none;
+}
+
+#leisure-view {
+    display: flex;
+    background-color: yellow;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-content: center;
+}
+
+#leisure-view.hidden {
+    display: none;
+}
+
+
+
+p {
+    font-size: 14px;
+    color: #555;
+    margin: 5px 0;
+}
+
 .off-span {
     display: block;
     justify-content: center;

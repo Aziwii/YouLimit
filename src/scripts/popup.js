@@ -30,16 +30,16 @@ function saveCheckBoxStates() {
 }
 
 function restoreCheckBoxStates() {
-    chrome.storage.local.get(["hideHomeSaved", "hideShortsSaved", "hideCategoriesSaved"], (data) => {
-            hideHomeCheckBox.checked = data.hideHomeSaved || false;
-            hideShortsCheckBox.checked = data.hideShortsSaved || false;
-            hideCategoriesCheckBox.checked = data.hideCategoriesSaved || false;
-            chrome.storage.local.set({
-                hideHome: data.hideHomeSaved,
-                hideShorts: data.hideShortsSaved,
-                hideCategories: data.hideCategoriesSaved
-            })
-        });
+    chrome.storage.local.get(["hideHome", "hideShorts", "hideCategories"], (data) => {
+        hideHomeCheckBox.checked = data.hideHome || false;
+        hideShortsCheckBox.checked = data.hideShorts || false;
+        hideCategoriesCheckBox.checked = data.hideCategories || false;
+
+        // add this to sync the UI classes too
+        updateButtonUI(hideHomeCheckBox, data.hideHome || false);
+        updateButtonUI(hideShortsCheckBox, data.hideShorts || false);
+        updateButtonUI(hideCategoriesCheckBox, data.hideCategories || false);
+    });
 }
 
 function switchView(state) {
@@ -56,7 +56,7 @@ function applyState(state) {
 
     } else if (state === "leisure") {
         lockSliders(true);
-        
+
     } else {
         lockSliders(false);
     }
@@ -81,11 +81,9 @@ function disableAll(enabled) {
 
     //when turning the power off
     if (!enabled) {
-        saveCheckBoxStates();
         hideHomeCheckBox.checked = false;
         hideShortsCheckBox.checked = false;
         hideCategoriesCheckBox.checked = false;
-        chrome.storage.local.set({ hideHome: false, hideShorts: false, hideCategories: false });
     } else { //when turning power on
         restoreCheckBoxStates();
     }
@@ -117,7 +115,7 @@ function updatePowerUI(enabled) {
 // 4. INIT
 function init() {
     chrome.storage.local.get(["enabled", "hideHome", "hideShorts", "hideCategories", "state"], (data) => {
-
+        restoreCheckBoxStates();
         // Define defaults
         const enabled = data.enabled ?? false;
         const hideHome = data.hideHome ?? false;

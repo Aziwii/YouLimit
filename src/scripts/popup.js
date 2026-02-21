@@ -52,7 +52,6 @@ function applyState(state) {
     switchView(state);
     //apply the change in state in logic
     if (state === "locked") {
-        saveCheckBoxStates();
         lockSliders(true);
         hideHomeCheckBox.checked = true;
         hideShortsCheckBox.checked = true;
@@ -60,7 +59,6 @@ function applyState(state) {
         chrome.storage.local.set({ hideHome: true, hideShorts: true, hideCategories: true});
 
     } else if (state === "leisure") {
-        saveCheckBoxStates();
         lockSliders(true);
         hideHomeCheckBox.checked = false;
         hideShortsCheckBox.checked = false;
@@ -68,7 +66,6 @@ function applyState(state) {
         chrome.storage.local.set({ hideHome: false, hideShorts: false });
     } else {
         lockSliders(false);
-        restoreCheckBoxStates();
     }
 }
 

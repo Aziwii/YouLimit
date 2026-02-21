@@ -53,17 +53,10 @@ function applyState(state) {
     //apply the change in state in logic
     if (state === "locked") {
         lockSliders(true);
-        hideHomeCheckBox.checked = true;
-        hideShortsCheckBox.checked = true;
-        hideCategoriesCheckBox.checked = true;
-        chrome.storage.local.set({ hideHome: true, hideShorts: true, hideCategories: true});
 
     } else if (state === "leisure") {
         lockSliders(true);
-        hideHomeCheckBox.checked = false;
-        hideShortsCheckBox.checked = false;
-        hideCategoriesCheckBox.checked = false;
-        chrome.storage.local.set({ hideHome: false, hideShorts: false });
+        
     } else {
         lockSliders(false);
     }

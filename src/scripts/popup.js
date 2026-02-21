@@ -4,7 +4,12 @@
 const pwrBtn = document.getElementById("power-toggle");
 const checkbox = document.getElementById("enabled");
 const stateDisplay = document.getElementById("state");
+const hideHomeBtn = document.getElementById("hide-home");
+const hideShortsBtn = document.getElementById("hide-shorts");
 
+function saveButtonState(buttonId, state) {
+    chrome.storage.local.set({ [buttonId]: state });
+}
 // 2. THE CENTRAL UI UPDATER
 // This ensures that no matter HOW the state changes, the UI looks the same.
 function updatePowerUI(enabled) {
@@ -56,9 +61,29 @@ checkbox.addEventListener("change", (e) => {
     updatePowerUI(isEnabled);
 });
 
-inputItem.addEventListener("change", (e) => {
+inputItem.addEventListener("change", (e) => {  
     chrome.storage.local.set({ "item": e.target.value });
 });
+
+hideHomeBtn.addEventListener('click', function() {
+    const isOn = this.classList.contains('on')
+    const newState = !isOn
+    
+    this.classList.toggle('on', newState)
+    this.classList.toggle('off', !newState)
+    
+    saveButtonState('hideHome', newState)
+})
+
+hideShortsBtn.addEventListener('click', function() {
+    const isOn = this.classList.contains('on')
+    const newState = !isOn
+    
+    this.classList.toggle('on', newState)
+    this.classList.toggle('off', !newState)
+    
+    saveButtonState('hideShorts', newState)
+})
 
 // Run init on load
 init();

@@ -5,6 +5,7 @@ const pwrBtn = document.getElementById("power-toggle");
 const stateDisplay = document.getElementById("state");
 const hideHomeCheckBox = document.getElementById("hide-home");
 const hideShortsCheckBox = document.getElementById("hide-shorts");
+const hideCategoriesCheckBox = document.getElementById("hide-categories");
 
 // 2. HELPER FUNCTIONS
 function saveButtonState(buttonId, state) {
@@ -23,17 +24,20 @@ function updateButtonUI(btn, state) {
 function saveCheckBoxStates() {
     chrome.storage.local.set({
             hideHomeSaved: hideHomeCheckBox.checked,
-            hideShortsSaved: hideShortsCheckBox.checked
+            hideShortsSaved: hideShortsCheckBox.checked, 
+            hideCategoriesSaved: hideCategoriesCheckBox.checked
         });
 }
 
 function restoreCheckBoxStates() {
-    chrome.storage.local.get(["hideHomeSaved", "hideShortsSaved"], (data) => {
+    chrome.storage.local.get(["hideHomeSaved", "hideShortsSaved", "hideCategoriesSaved"], (data) => {
             hideHomeCheckBox.checked = data.hideHomeSaved || false;
             hideShortsCheckBox.checked = data.hideShortsSaved || false;
+            hideCategoriesCheckBox.checked = data.hideCategoriesSaved || false;
             chrome.storage.local.set({
                 hideHome: data.hideHomeSaved,
-                hideShorts: data.hideShortsSaved
+                hideShorts: data.hideShortsSaved,
+                hideCategories: data.hideCategoriesSaved
             })
         });
 }
@@ -52,13 +56,15 @@ function applyState(state) {
         lockSliders(true);
         hideHomeCheckBox.checked = true;
         hideShortsCheckBox.checked = true;
-        chrome.storage.local.set({ hideHome: true, hideShorts: true });
+        hideCategoriesCheckBox.checked = true;
+        chrome.storage.local.set({ hideHome: true, hideShorts: true, hideCategories: true});
 
     } else if (state === "leisure") {
         saveCheckBoxStates();
         lockSliders(true);
         hideHomeCheckBox.checked = false;
         hideShortsCheckBox.checked = false;
+        hideCategoriesCheckBox.checked = false;
         chrome.storage.local.set({ hideHome: false, hideShorts: false });
     } else {
         lockSliders(false);
@@ -76,6 +82,7 @@ function stateChange(newState) {
 function lockSliders(locked) {
     hideHomeCheckBox.disabled = locked;
     hideShortsCheckBox.disabled = locked;
+    hideCategoriesCheckBox.disabled = locked;
 }
 
 function disableAll(enabled) {
@@ -87,7 +94,8 @@ function disableAll(enabled) {
         saveCheckBoxStates();
         hideHomeCheckBox.checked = false;
         hideShortsCheckBox.checked = false;
-        chrome.storage.local.set({ hideHome: false, hideShorts: false });
+        hideCategoriesCheckBox.checked = false;
+        chrome.storage.local.set({ hideHome: false, hideShorts: false, hideCategories: false });
     } else { //when turning power on
         restoreCheckBoxStates();
     }
@@ -118,23 +126,25 @@ function updatePowerUI(enabled) {
 
 // 4. INIT
 function init() {
-    chrome.storage.local.get(["enabled", "hideHome", "hideShorts", "state"], (data) => {
+    chrome.storage.local.get(["enabled", "hideHome", "hideShorts", "hideCategories", "state"], (data) => {
 
         // Define defaults
         const enabled = data.enabled ?? false;
         const hideHome = data.hideHome ?? false;
         const hideShorts = data.hideShorts ?? false;
+        const hideCategories = data.hideCategories ?? false;
         const state = data.state ?? "default";
         stateDisplay.value = state;
 
         // Write defaults to storage if first load
-        chrome.storage.local.set({ enabled, hideHome, hideShorts, state });
+        chrome.storage.local.set({ enabled, hideHome, hideShorts, hideCategories, state });
 
         // Paint UI with actual values
         updatePowerUI(enabled);
         if (enabled) applyState(state);
         hideHomeCheckBox.checked = hideHome;
         hideShortsCheckBox.checked = hideShorts;
+        hideCategoriesCheckBox.checked = hideCategories;
     });
 }
 // 5. EVENT LISTENERS
@@ -156,6 +166,12 @@ hideHomeCheckBox.addEventListener("change", function () {
     const newState = this.checked;
     updateButtonUI(this, newState);
     saveButtonState("hideHome", newState);
+});
+
+hideCategoriesCheckBox.addEventListener("change", function () {
+    const newState = this.checked;
+    updateButtonUI(this, newState);
+    saveButtonState("hideCategories", newState);
 });
 
 hideShortsCheckBox.addEventListener("change", function () {

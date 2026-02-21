@@ -16,6 +16,10 @@ body {
     width: 100%;
 }
 
+.main-container.hidden {
+    display: none;
+}
+
 .header {
     display: flex;
     flex-direction: row;
@@ -29,6 +33,20 @@ body {
     color: #333;
     align-content: flex-start;
 }
+
+.off-span.hidden {
+    display: none;
+}
+
+.off-span {
+    display: block;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    font-size: large;
+    padding: 50px;
+}
+
 
 .toggle-buttons {
     display: flex;

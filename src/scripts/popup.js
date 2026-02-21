@@ -2,63 +2,112 @@
 
 // 1. SELECT ELEMENTS
 const pwrBtn = document.getElementById("power-toggle");
-const checkbox = document.getElementById("enabled");
 const stateDisplay = document.getElementById("state");
+const hideHomeCheckBox = document.getElementById("hide-home");
+const hideShortsCheckBox = document.getElementById("hide-shorts");
 
-// 2. THE CENTRAL UI UPDATER
-// This ensures that no matter HOW the state changes, the UI looks the same.
+// 2. HELPER FUNCTIONS
+function saveButtonState(buttonId, state) {
+    chrome.storage.local.set({ [buttonId]: state });
+}
+
+function updateButtonUI(btn, state) {
+    btn.classList.toggle("on", state);
+    btn.classList.toggle("off", !state);
+}
+
+function saveCheckBoxStates() {
+    chrome.storage.local.set({
+            hideHomeSaved: hideHomeCheckBox.checked,
+            hideShortsSaved: hideShortsCheckBox.checked
+        });
+}
+
+function restoreCheckBoxStates() {
+    chrome.storage.local.get(["hideHomeSaved", "hideShortsSaved"], (data) => {
+            hideHomeCheckBox.checked = data.hideHomeSaved || false;
+            hideShortsCheckBox.checked = data.hideShortsSaved || false;
+            chrome.storage.local.set({
+                hideHome: data.hideHomeSaved,
+                hideShorts: data.hideShortsSaved
+            })
+        });
+}
+
+function disableAll(enabled) {
+    const mainContainer = document.getElementById("main-container");
+    const offSpan = document.getElementById("off-span");
+
+    //when turning the power off
+    if (!enabled) {
+        saveCheckBoxStates();
+        hideHomeCheckBox.checked = false;
+        hideShortsCheckBox.checked = false;
+        chrome.storage.local.set({ hideHome: false, hideShorts: false });
+    } else { //when turning power on
+        restoreCheckBoxStates();
+    }
+    mainContainer.classList.toggle("hidden", !enabled);
+    offSpan.classList.toggle("hidden", enabled);
+
+    hideHomeCheckBox.disabled = !enabled;
+    hideShortsCheckBox.disabled = !enabled;
+}
+
+// 3. UI UPDATER
 function updatePowerUI(enabled) {
     const statusText = enabled ? "ON" : "OFF";
-    
-    // Update Button
     pwrBtn.textContent = statusText;
     pwrBtn.classList.toggle("on", enabled);
     pwrBtn.classList.toggle("off", !enabled);
-    
-    // Update Checkbox (keep them in sync!)
-    if (checkbox) checkbox.checked = enabled;
-    
-    // Update Badge
-    void chrome.action.setBadgeText({ text: statusText });
 
-    chrome.action.setBadgeBackgroundColor({ 
-    color: enabled ? "#2ecc71" : "#555555" 
-});
+    void chrome.action.setBadgeText({ text: statusText });
+    chrome.action.setBadgeBackgroundColor({
+        color: enabled ? "#2ecc71" : "#555555"
+    });
+
+    //handle all the disabling when UI changes
+    disableAll(enabled);
 }
 
-// 3. INITIALIZE (The "Main" Logic)
+// 4. INIT
 function init() {
-    
-    chrome.storage.local.get(["enabled", "item", "state"], (data) => {
-        // Sync Power State
-        updatePowerUI(!!data.enabled);
-        document.getElementById('enabled').checked = !!data.enabled;
-        
-        // Sync Text Inputs
-        if (inputItem) inputItem.value = data.item || "";
-        if (stateDisplay) stateDisplay.textContent = data.state || "No state set";
+    chrome.storage.local.get(["enabled", "hideHome", "hideShorts"], (data) => {
+
+        // Define defaults
+        const enabled = data.enabled ?? false;
+        const hideHome = data.hideHome ?? false;
+        const hideShorts = data.hideShorts ?? false;
+
+        // Write defaults to storage if first load
+        chrome.storage.local.set({ enabled, hideHome, hideShorts });
+
+        // Paint UI with actual values
+        updatePowerUI(enabled);
+        hideHomeCheckBox.checked = hideHome;
+        hideShortsCheckBox.checked = hideShorts;
     });
 }
-
-document.addEventListener("DOMContentLoaded", init);
-
-// 4. EVENT LISTENERS
+// 5. EVENT LISTENERS
 pwrBtn.addEventListener("click", () => {
+    // button is ON → contains("on") = true → !true = false → turns OFF ✅
+    // button is OFF → contains("on") = false → !false = true → turns ON ✅
     const isNowOn = !pwrBtn.classList.contains("on");
-    chrome.storage.local.set({ "enabled": isNowOn });
+    chrome.storage.local.set({ enabled: isNowOn });
     updatePowerUI(isNowOn);
 });
 
-// If you still want the checkbox to work separately
-checkbox.addEventListener("change", (e) => {
-    const isEnabled = e.target.checked;
-    chrome.storage.local.set({ "enabled": isEnabled });
-    updatePowerUI(isEnabled);
+hideHomeCheckBox.addEventListener("change", function () {
+    const newState = this.checked;
+    updateButtonUI(this, newState);
+    saveButtonState("hideHome", newState);
 });
 
-inputItem.addEventListener("change", (e) => {
-    chrome.storage.local.set({ "item": e.target.value });
+hideShortsCheckBox.addEventListener("change", function () {
+    const newState = this.checked;
+    updateButtonUI(this, newState);
+    saveButtonState("hideShorts", newState);
 });
 
-// Run init on load
-init();
+// 6. START
+document.addEventListener("DOMContentLoaded", init);

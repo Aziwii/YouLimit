@@ -6,6 +6,7 @@ body {
     background-color: #f9f9f9;
     height: 500px;
     width: 300px;
+    overflow: hidden;
 }
 
 .main-container {
@@ -14,6 +15,7 @@ body {
     align-items: center;
     height: 100%;
     width: 100%;
+    box-sizing: border-box;
 }
 
 .main-container.hidden {

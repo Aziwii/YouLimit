@@ -21,14 +21,6 @@ function updateButtonUI(btn, state) {
     btn.classList.toggle("off", !state);
 }
 
-function saveCheckBoxStates() {
-    chrome.storage.local.set({
-            hideHomeSaved: hideHomeCheckBox.checked,
-            hideShortsSaved: hideShortsCheckBox.checked, 
-            hideCategoriesSaved: hideCategoriesCheckBox.checked
-        });
-}
-
 function restoreCheckBoxStates() {
     chrome.storage.local.get(["hideHome", "hideShorts", "hideCategories"], (data) => {
         hideHomeCheckBox.checked = data.hideHome || false;

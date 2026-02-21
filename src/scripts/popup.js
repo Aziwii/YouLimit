@@ -11,6 +11,10 @@ function saveButtonState(buttonId, state) {
     chrome.storage.local.set({ [buttonId]: state });
 }
 
+function saveDropdownState(dropDownId, state) {
+    chrome.storage.local.set({[dropDownId]: state});
+}
+
 function updateButtonUI(btn, state) {
     btn.classList.toggle("on", state);
     btn.classList.toggle("off", !state);
@@ -34,6 +38,39 @@ function restoreCheckBoxStates() {
         });
 }
 
+function applyState(state) {
+    //apply the change in state in logic
+    if (state === "locked") {
+        saveCheckBoxStates();
+        lockSliders(true);
+        hideHomeCheckBox.checked = true;
+        hideShortsCheckBox.checked = true;
+        chrome.storage.local.set({ hideHome: true, hideShorts: true });
+
+    } else if (state === "leisure") {
+        saveCheckBoxStates();
+        lockSliders(true);
+        hideHomeCheckBox.checked = false;
+        hideShortsCheckBox.checked = false;
+        chrome.storage.local.set({ hideHome: false, hideShorts: false });
+    } else {
+        lockSliders(false);
+        restoreCheckBoxStates();
+    }
+}
+
+
+function stateChange(newState) {
+    //apply the change in state to storage
+    chrome.storage.local.set({state: newState});
+    applyState(newState);
+}
+
+function lockSliders(locked) {
+    hideHomeCheckBox.disabled = locked;
+    hideShortsCheckBox.disabled = locked;
+}
+
 function disableAll(enabled) {
     const mainContainer = document.getElementById("main-container");
     const offSpan = document.getElementById("off-span");
@@ -47,11 +84,13 @@ function disableAll(enabled) {
     } else { //when turning power on
         restoreCheckBoxStates();
     }
+    //toggle the UI 
     mainContainer.classList.toggle("hidden", !enabled);
     offSpan.classList.toggle("hidden", enabled);
 
-    hideHomeCheckBox.disabled = !enabled;
-    hideShortsCheckBox.disabled = !enabled;
+    //lock and unlock the sliders and dropdown
+    lockSliders(!enabled);
+    stateDisplay.disabled = !enabled;
 }
 
 // 3. UI UPDATER
@@ -72,18 +111,21 @@ function updatePowerUI(enabled) {
 
 // 4. INIT
 function init() {
-    chrome.storage.local.get(["enabled", "hideHome", "hideShorts"], (data) => {
+    chrome.storage.local.get(["enabled", "hideHome", "hideShorts", "state"], (data) => {
 
         // Define defaults
         const enabled = data.enabled ?? false;
         const hideHome = data.hideHome ?? false;
         const hideShorts = data.hideShorts ?? false;
+        const state = data.state ?? "default";
+        stateDisplay.value = state;
 
         // Write defaults to storage if first load
         chrome.storage.local.set({ enabled, hideHome, hideShorts });
 
         // Paint UI with actual values
         updatePowerUI(enabled);
+        if (enabled) applyState(state);
         hideHomeCheckBox.checked = hideHome;
         hideShortsCheckBox.checked = hideShorts;
     });
@@ -95,6 +137,12 @@ pwrBtn.addEventListener("click", () => {
     const isNowOn = !pwrBtn.classList.contains("on");
     chrome.storage.local.set({ enabled: isNowOn });
     updatePowerUI(isNowOn);
+});
+
+stateDisplay.addEventListener("change", (event) => {
+    const newState = event.target.value;
+    stateChange(newState);
+    saveDropdownState("state", newState);
 });
 
 hideHomeCheckBox.addEventListener("change", function () {

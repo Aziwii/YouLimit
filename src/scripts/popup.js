@@ -13,7 +13,7 @@ function saveButtonState(buttonId, state) {
 }
 
 function saveDropdownState(dropDownId, state) {
-    chrome.storage.local.set({[dropDownId]: state});
+    chrome.storage.local.set({ [dropDownId]: state });
 }
 
 function updateButtonUI(btn, state) {
@@ -22,15 +22,17 @@ function updateButtonUI(btn, state) {
 }
 
 function restoreCheckBoxStates() {
-    chrome.storage.local.get(["hideHome", "hideShorts", "hideCategories"], (data) => {
+    chrome.storage.local.get(["hideHome", "hideShorts", "hideCategories", "lockIn"], (data) => {
         hideHomeCheckBox.checked = data.hideHome || false;
         hideShortsCheckBox.checked = data.hideShorts || false;
         hideCategoriesCheckBox.checked = data.hideCategories || false;
+        lockInCheckBox.checked = data.lockIn || false;
 
         // add this to sync the UI classes too
         updateButtonUI(hideHomeCheckBox, data.hideHome || false);
         updateButtonUI(hideShortsCheckBox, data.hideShorts || false);
         updateButtonUI(hideCategoriesCheckBox, data.hideCategories || false);
+        updateButtonUI(lockInCheckBox, data.lockIn || false);
     });
 }
 
@@ -56,7 +58,7 @@ function applyState(state) {
 
 function stateChange(newState) {
     //apply the change in state to storage
-    chrome.storage.local.set({state: newState});
+    chrome.storage.local.set({ state: newState });
     applyState(newState);
 }
 
@@ -90,7 +92,7 @@ function disableAll(enabled) {
 function mathCheck(onSuccess) {
     const num1 = Math.floor(Math.random() * 10)
     const num2 = Math.floor(Math.random() * 10)
-    
+
     document.getElementById("unlock-prompt").classList.remove("hidden")
     document.getElementById("unlock-question").textContent = `What is ${num1} + ${num2}?`
 
@@ -162,9 +164,9 @@ pwrBtn.addEventListener("click", () => {
             updatePowerUI(false);
             lockInCheckBox.checked = false
             updateButtonUI(lockInCheckBox, false)
-            saveButtonState("lockIn", false) 
+            saveButtonState("lockIn", false)
         })
-        
+
         return  // stop here until math check passes
     }
     chrome.storage.local.set({ enabled: isNowOn });
@@ -173,6 +175,19 @@ pwrBtn.addEventListener("click", () => {
 
 stateDisplay.addEventListener("change", (event) => {
     const newState = event.target.value;
+    if (lockInCheckBox.checked) {
+        stateDisplay.value = "locked"
+        mathCheck(() => {
+            lockInCheckBox.checked = false
+            updateButtonUI(lockInCheckBox, false)
+            saveButtonState("lockIn", false)
+            stateDisplay.value = newState;
+            stateChange(newState);
+            saveDropdownState("state", newState);
+        })
+        return  // stop here until math check passes
+    }
+    
     stateChange(newState);
     saveDropdownState("state", newState);
 });

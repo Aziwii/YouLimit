@@ -42,6 +42,7 @@ By using the the timer to choose how many minutes to focus for, all focus featur
    </video>
 2. If the user wants to exit 'Locked In' mode early, they  
     must complete a math problem.
+   ![Default mode image](assets/mathProblem.png)
    <video src="assets/endEarly.mp4" width="600" controls>
    Your browser does not support the video tag.
    </video>

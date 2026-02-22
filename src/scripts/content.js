@@ -1,4 +1,12 @@
-//import { API_KEY } from './config.js';
+let YOUTUBE_API_KEY = null;
+
+// Request key ONCE on load
+chrome.runtime.sendMessage({ type: "GET_YOUTUBE_KEY" }, (response) => {
+    if (response?.key) {
+        YOUTUBE_API_KEY = response.key;
+        console.log("Global API Key is ready.");
+    }
+});
 
 
 // Create a persistent style tag once and adds it to the <head>
@@ -14,14 +22,16 @@ document.head.appendChild(videoStyle); // add style to DOM
 
 const ALLOWED_CATEGORIES = ['27','28'];
 
-
+//========================================================================================//
+// FUNCTIONS
+//========================================================================================//
 
 // Toggles recomended visibility depending on the state of the toggleRecommended switch
 // in the popup.html
  function toggleHome(homeToggleState) {
         const feed = document.querySelector('ytd-rich-grid-renderer'); // Targets main for you feed
         const sidebar = document.querySelector('#secondary-inner'); // targets side bar
-        console.log("PRINTING hideHome", homeToggleState);
+        //console.log("PRINTING hideHome", homeToggleState);
         if (feed != null && sidebar != null) {
             if (homeToggleState) {
                 feed.style.display = 'none';
@@ -68,49 +78,13 @@ function toggleShorts(shortsToggleState) {
 }
 
 
-async function toggleCategories(categoriesState) {
-    // Get all video elements that haven't been checked yet
-    const videoElements = document.querySelectorAll('ytd-rich-item-renderer:not([data-checked])');
-    const videoIds = []; // stores the video id's
-    const elementMap = {};
-
-    videoElements.forEach(el => {
-        const link = el.querySelector('a#video-title-link')?.href;
-        if (link) {
-            const id = new URL(link).searchParams.get('v');
-            videoIds.push(id);
-            elementMap[id] = el;
-            el.setAttribute('data-checked', 'true'); // Mark as checked
-        }
-    });
-
-    if (videoIds.length === 0) return;
-
-    // Call YouTube API (Batch up to 50)
-    const response = await fetch(
-        `https://www.googleapis.com{videoIds.join(',')}&key=${API_KEY}`
-    );
-    const data = await response.json();
-
-    // If videos don't belong to Education (27) or Science & Tech (28)
-    // Hide them
-    data.items.forEach(video => {
-        if (!ALLOWED_CATEGORIES.includes(video.snippet.categoryId)) {
-            if (categoriesState) {
-                elementMap[video.id].style.display = 'none';
-            }
-            else {
-                elementMap[video.id].style.display = '';
-            }
-        }
-    });
-}
 
 
 // Listen for changes to the chrome local storage
 chrome.storage.onChanged.addListener((changes) => {
     const hideHome = changes.hideHome;
     const hideShorts = changes.hideShorts;
+    const hideCategories = changes.hideCategories;
     const tabState = changes.state?.newValue;
     console.log("PRINTING TABSTATE", tabState);
 
@@ -122,6 +96,10 @@ chrome.storage.onChanged.addListener((changes) => {
 
         if (hideShorts) {
             toggleShorts(hideShorts.newValue);
+        }
+
+        if (hideCategories) {
+            console.log("IN LISTNEER FOR CATEGORIES", hideCategories);
         }
     }
 
@@ -153,30 +131,40 @@ const observer = new MutationObserver(() => {
         return;
     }
 
-    // FIX, ADD CHECK FOR MASTER
-    chrome.storage.local.get(['enabled', 'hideHome', 'hideShorts'], (data) => {
+    // FIX, ADD CHECK FOR MASTER SWITCH
+    chrome.storage.local.get(['enabled', 'state', 'hideHome', 'hideShorts', 'hideCategories'], (data) => {
         if (chrome.runtime?.lastError) return; // Catch errors if context just died
-        toggleHome(data.hideHome);
-        toggleShorts(data.hideShorts);
-    });
-
-    console.log("INSIDE OBSERVER BEFORE STATE GET");
-
-    chrome.storage.local.get(['state', 'hideHome', 'hideShorts'], (data) => {
-        if (chrome.runtime?.lastError) return; // Catch errors if context just died
-        console.log("INSIDE OBSERVER AFTER STATE GET");
-
         if (data.state == "default") {
             toggleHome(data.hideHome);
             toggleShorts(data.hideShorts);
         }
 
         else if (data.state == "locked") {
-            toggleHome(data.hideHome);
-            toggleShorts(data.hideShorts);
+            toggleHome(true);
+            toggleShorts(true);
+            //(true);
         }
-        
+            
     });
+
+    //console.log("INSIDE OBSERVER BEFORE STATE GET");
+
+    // chrome.storage.local.get(['state', 'hideHome', 'hideShorts'], (data) => {
+    //     if (chrome.runtime?.lastError) return; // Catch errors if context just died
+    //     //console.log("INSIDE OBSERVER AFTER STATE GET");
+
+    //     if (data.state == "default") {
+    //         toggleHome(data.hideHome);
+    //         toggleShorts(data.hideShorts);
+    //     }
+
+    //     else if (data.state == "locked") {
+    //         toggleHome(data.hideHome);
+    //         toggleShorts(data.hideShorts);
+    //         (data.)
+    //     }
+        
+    // });
 });
 
 
@@ -187,10 +175,10 @@ observer.observe(document.body, {
 });
 
 // Runs once on initial page load
-chrome.storage.local.get('enabled', (data) => {
+chrome.storage.local.get(['enabled', 'hideHome', 'hideShorts', 'hideCategories'], (data) => {
+    
     toggleHome(data.hideHome);
     toggleShorts(data.hideShorts);
-    //toggleCategories(data.hideCategories);
 
 
 });

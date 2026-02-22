@@ -18,7 +18,8 @@ Enabling this toggle will completely most shorts content on home page and while 
 ### Hide Categories
 
 Enabling this toggle will filter out videos that do belong to the 'Educational' or 'Science  
-and Technology' categories.
+and Technology' categories.  
+note: _Youtube API key required, current has key exists on locally on client side ignored by git_
 
 ## Locked In Mode
 

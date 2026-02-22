@@ -1,9 +1,18 @@
+:root {
+    --accent: #df0000;
+    --background: #333333;
+    --text: #ffffff;
+    --off: #575757;
+    --success: #2ecc71;
+    --border-radius: 8px;
+}
+
 html,
 body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
+    background-color: var(--background);
     height: 500px;
     width: 300px;
     overflow: hidden;
@@ -16,7 +25,7 @@ body {
     height: 100%;
     width: 100%;
     box-sizing: border-box;
-    overflow-y: auto;
+
 }
 
 .main-container.hidden {
@@ -27,18 +36,24 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 10px;
 }
+
 #state {
+    font-size: 20px;
+    color: var(--off);
     margin: 10px;
-    font-size: 14px;
-    color: #777;
 }
 
 .header h1 {
     font-size: 24px;
     margin: 0;
     padding: 10px;
-    color: #333;
+    color: var(--text);
     align-content: flex-start;
 }
 
@@ -55,7 +70,7 @@ body {
     width: 100%;
     height: 100%;
     box-sizing: border-box;
-    background-color: yellowgreen;
+
     justify-content: center;
     align-content: center;
 }
@@ -67,10 +82,8 @@ body {
 #locked-view {
     display: flex;
     flex-direction: column;
-    background-color: rgb(234, 41, 41);
     width: 100%;
     height: 100%;
-    overflow-y: auto;
 }
 
 #locked-view.hidden {
@@ -79,7 +92,6 @@ body {
 
 #leisure-view {
     display: flex;
-    background-color: yellow;
     width: 100%;
     height: 100%;
     justify-content: center;
@@ -91,19 +103,22 @@ body {
 }
 
 .sub-header {
-    font-size: 20px;
-    color: #333;
+    font-size: 24px;
+    color: var(--accent);
     text-align: center;
     justify-content: center;
-    background-color: #555;
 }
 
 .slider-text {
     font-size: 20px;
-    color: #555;
+    color: var(--text);
     margin: 5px 0;
 }
 
+#unlock-question {
+    color: var(--text);
+    font-size: 12px;
+}
 .off-span {
     display: block;
     justify-content: center;
@@ -111,6 +126,8 @@ body {
     text-align: center;
     font-size: large;
     padding: 50px;
+    font-size: 24px;
+    color: var(--off);
 }
 
 
@@ -204,7 +221,7 @@ body {
 }
 
 input:checked+.slider {
-    background-color: #2196F3;
+    background-color: var(--accent);
 }
 
 input:checked+.slider:before {
@@ -231,9 +248,9 @@ input:checked+.slider:before {
 }
 
 #timer {
-    font-size: 48px;
+    font-size: 36px;
     font-weight: bold;
-    color: #333;
+    color: var(--text);
     margin-bottom: 20px;
     text-align: center;
 }
@@ -258,5 +275,3 @@ input:checked+.slider:before {
     background-color: black;
     color: white;
 }
-
-

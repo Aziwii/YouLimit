@@ -7,6 +7,8 @@ const hideHomeCheckBox = document.getElementById("hide-home");
 const hideShortsCheckBox = document.getElementById("hide-shorts");
 const hideCategoriesCheckBox = document.getElementById("hide-categories");
 const lockInCheckBox = document.getElementById("toggle-lockIn");
+
+let countDownInterval = null;
 // 2. HELPER FUNCTIONS
 function saveButtonState(buttonId, state) {
     chrome.storage.local.set({ [buttonId]: state });
@@ -187,7 +189,7 @@ stateDisplay.addEventListener("change", (event) => {
         })
         return  // stop here until math check passes
     }
-    
+
     stateChange(newState);
     saveDropdownState("state", newState);
 });

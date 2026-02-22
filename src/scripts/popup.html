@@ -43,10 +43,30 @@
             </section>
         </section>
         <section id="locked-view" class="locked-view hidden">
-            <p>You are locked tf in</p>
+            <h2 class="sub-header">You are locked tf in</h2>
+
+            <div id="lockin-button-container" class="toggle-container">
+                <label class="switch">
+                    <input id="toggle-lockIn" type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+                <label class="slider-text" for="toggle-lockIn">Lock in until on/off</label>
+            </div>
+            <div id="unlock-prompt" class="hidden">
+                <p id="unlock-question">What is ? + ?</p>
+                <input type="number" id="unlock-input" placeholder="Enter answer">
+                <button id="unlock-confirm">Confirm</button>
+                <button id="unlock-cancel">Cancel</button>
+            </div>
+
+            <p id="timer">00:00</p>
+            <div class="timer-button-flex">
+                <button class="timer-buttons" id="start-timer">Start</button>
+                <button class="timer-buttons" id="stop-timer">Stop</button>
+            </div>
         </section>
         <section id="leisure-view" class="leisure-view hidden">
-            <p>you are leisured tf in</p>
+            <h2>you are leisured tf in</h2>
         </section>
     </div>
     <script src="popup.js"></script>

@@ -6,7 +6,7 @@ const stateDisplay = document.getElementById("state");
 const hideHomeCheckBox = document.getElementById("hide-home");
 const hideShortsCheckBox = document.getElementById("hide-shorts");
 const hideCategoriesCheckBox = document.getElementById("hide-categories");
-
+const lockInCheckBox = document.getElementById("toggle-lockIn");
 // 2. HELPER FUNCTIONS
 function saveButtonState(buttonId, state) {
     chrome.storage.local.set({ [buttonId]: state });
@@ -54,7 +54,6 @@ function applyState(state) {
     }
 }
 
-
 function stateChange(newState) {
     //apply the change in state to storage
     chrome.storage.local.set({state: newState});
@@ -86,6 +85,30 @@ function disableAll(enabled) {
     //lock and unlock the sliders and dropdown
     lockSliders(!enabled);
     stateDisplay.disabled = !enabled;
+}
+
+function mathCheck(onSuccess) {
+    const num1 = Math.floor(Math.random() * 10)
+    const num2 = Math.floor(Math.random() * 10)
+    
+    document.getElementById("unlock-prompt").classList.remove("hidden")
+    document.getElementById("unlock-question").textContent = `What is ${num1} + ${num2}?`
+
+    document.getElementById("unlock-confirm").onclick = () => {
+        const input = parseInt(document.getElementById("unlock-input").value)
+        if (input === num1 + num2) {
+            document.getElementById("unlock-prompt").classList.add("hidden")
+            document.getElementById("unlock-input").value = ""
+            onSuccess()  // run whatever needs to happen after correct answer
+        } else {
+            alert("Wrong answer!")
+        }
+    }
+
+    document.getElementById("unlock-cancel").onclick = () => {
+        document.getElementById("unlock-prompt").classList.add("hidden")
+        document.getElementById("unlock-input").value = ""
+    }
 }
 
 // 3. UI UPDATER
@@ -132,6 +155,18 @@ pwrBtn.addEventListener("click", () => {
     // button is ON → contains("on") = true → !true = false → turns OFF ✅
     // button is OFF → contains("on") = false → !false = true → turns ON ✅
     const isNowOn = !pwrBtn.classList.contains("on");
+    //check if the lockin is active prompt for input
+    if (!isNowOn && lockInCheckBox.checked) {
+        mathCheck(() => {
+            chrome.storage.local.set({ enabled: false });
+            updatePowerUI(false);
+            lockInCheckBox.checked = false
+            updateButtonUI(lockInCheckBox, false)
+            saveButtonState("lockIn", false) 
+        })
+        
+        return  // stop here until math check passes
+    }
     chrome.storage.local.set({ enabled: isNowOn });
     updatePowerUI(isNowOn);
 });
@@ -158,6 +193,27 @@ hideShortsCheckBox.addEventListener("change", function () {
     const newState = this.checked;
     updateButtonUI(this, newState);
     saveButtonState("hideShorts", newState);
+});
+
+lockInCheckBox.addEventListener("change", function () {
+    if (this.checked === false) {
+        this.checked = true;
+        mathCheck(() => {
+            lockInCheckBox.checked = false
+            updateButtonUI(lockInCheckBox, false)
+            saveButtonState("lockIn", false)
+        })
+        return;
+    } else {
+        const confirmed = confirm("Are you sure you want to lock in?");
+        if (!confirmed) {
+            this.checked = false;
+            return;
+        }
+    }
+    const newState = this.checked;
+    updateButtonUI(this, newState);
+    saveButtonState("lockIn", newState);
 });
 
 // 6. START

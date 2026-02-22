@@ -1,75 +1,90 @@
 <html lang="en">
-
-<head>
+  <head>
     <title>Popup</title>
-    <link rel="stylesheet" href="../styles/popup.css">
-</head>
+    <link rel="stylesheet" href="../styles/popup.css" />
+  </head>
 
-<body>
+  <body>
     <header class="header">
-        <h1 class="title">YouLimit</h1>
-        <button id="power-toggle" class="off">Off</button>
+      <h1 class="title">YouLimit</h1>
+      <button id="power-toggle" class="off">Off</button>
     </header>
     <span id="off-span" class="off-span">YouLimit is turned off</span>
     <div id="main-container" class="main-container">
-        <select id="state">
-            <option value="default">Default</option>
-            <option value="locked">Locked In</option>
-            <option value="leisure">Leisure Mode</option>
-        </select>
-        <section id="default-view" class="default-view">
-            <section class="toggle-buttons">
-                <div class="toggle-container">
-                    <label class="switch">
-                        <input id="hide-home" type="checkbox">
-                        <span class="slider round"></span>
-                    </label>
-                    <label class="slider-text" for="hide-home">Hide Home Page</label>
-                </div>
-                <div class="toggle-container">
-                    <label class="switch">
-                        <input id="hide-shorts" type="checkbox">
-                        <span class="slider round"></span>
-                    </label>
-                    <label class="slider-text" for="hide-shorts">Hide Shorts</label>
-                </div>
-                <div class="toggle-container">
-                    <label class="switch">
-                        <input id="hide-categories" type="checkbox">
-                        <span class="slider round"></span>
-                    </label>
-                    <label class="slider-text" for="hide-categories">Hide Categories</label>
-                </div>
-            </section>
+      <select id="state">
+        <option value="default">Default</option>
+        <option value="locked">Locked In</option>
+        <!--Leisure mode coming soon-->
+        <!--<option value="leisure">Leisure Mode</option> -->
+      </select>
+      <section id="default-view" class="default-view">
+        <section class="toggle-buttons">
+          <div class="toggle-container">
+            <label class="switch">
+              <input id="hide-home" type="checkbox" />
+              <span class="slider round"></span>
+            </label>
+            <label class="slider-text" for="hide-home">Hide Home Page</label>
+          </div>
+          <div class="toggle-container">
+            <label class="switch">
+              <input id="hide-shorts" type="checkbox" />
+              <span class="slider round"></span>
+            </label>
+            <label class="slider-text" for="hide-shorts">Hide Shorts</label>
+          </div>
+          <div class="toggle-container">
+            <label class="switch">
+              <input id="hide-categories" type="checkbox" />
+              <span class="slider round"></span>
+            </label>
+            <label class="slider-text" for="hide-categories"
+              >Hide Categories</label
+            >
+          </div>
         </section>
-        <section id="locked-view" class="locked-view hidden">
-            <h2 class="sub-header">It is time to lock tf in!</h2>
+      </section>
+      <section id="locked-view" class="locked-view hidden">
+        <h2 class="sub-header">It is time to LOCK IN!</h2>
 
-            <div id="lockin-button-container" class="toggle-container">
-                <label class="switch">
-                    <input id="toggle-lockIn" type="checkbox">
-                    <span class="slider round"></span>
-                </label>
-                <label class="slider-text" for="toggle-lockIn">Lock in until on/off</label>
-            </div>
-            <div id="unlock-prompt" class="hidden">
-                <p id="unlock-question">What is ? + ?</p>
-                <input type="number" id="unlock-input" placeholder="Enter answer">
-                <button id="unlock-confirm">Confirm</button>
-                <button id="unlock-cancel">Cancel</button>
-            </div>
+        <div id="unlock-prompt" class="hidden">
+          <p id="unlock-question">What is ? + ?</p>
+          <input type="number" id="unlock-input" placeholder="Enter answer" />
+          <button id="unlock-confirm">Confirm</button>
+          <button id="unlock-cancel">Cancel</button>
+        </div>
 
-            <p id="timer">Timer Coming Soon!</p>
-            <div class="timer-button-flex">
-                <button class="timer-buttons" id="start-timer">Start</button>
-                <button class="timer-buttons" id="stop-timer">Stop</button>
-            </div>
-        </section>
-        <section id="leisure-view" class="leisure-view hidden">
+        <!--<p id="timer">Timer Coming Soon!</p>-->
+        <div class="timer-container">
+          <div id="countdown">
+            <p id="countdown-display">0:00</p>
+          </div>
+          <div class="input-section">
+            <label for="minutes">Set Time (minutes): </label>
+            <input type="number" id="minutes" placeholder="Enter Min" min="1" />
+          </div>
+
+          <div class="timer-button-flex">
+            <button class="timer-buttons" id="start">Start</button>
+            <button class="timer-buttons" id="pause">Pause</button>
+          </div>
+        </div>
+
+        <div id="lockin-button-container" class="toggle-container">
+          <label class="switch">
+            <input id="toggle-lockIn" type="checkbox" />
+            <span class="slider round"></span>
+          </label>
+          <label class="slider-text" for="toggle-lockIn"
+            >Lock in until on/off</label
+          >
+        </div>
+      </section>
+      <!--Leisure mode coming soon-->
+      <!-- <section id="leisure-view" class="leisure-view hidden">
             <h2>Leisure Mode Coming Soon!</h2>
-        </section>
+        </section> -->
     </div>
-    <script src="popup.js"></script>
-</body>
-
+    <script src="popup.js" defer></script>
+  </body>
 </html>

@@ -1,277 +1,327 @@
 :root {
-    --accent: #df0000;
-    --background: #333333;
-    --text: #ffffff;
-    --off: #575757;
-    --success: #2ecc71;
-    --border-radius: 8px;
+  --accent: #df0000;
+  --background: #333333;
+  --text: #ffffff;
+  --off: #575757;
+  --success: #2ecc71;
+  --border-radius: 8px;
 }
 
 html,
 body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: var(--background);
-    height: 500px;
-    width: 300px;
-    overflow: hidden;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: var(--background);
+  height: 500px;
+  width: 300px;
+  overflow: hidden;
 }
 
 .main-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    box-sizing: border-box;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .main-container.hidden {
-    display: none;
+  display: none;
 }
 
 .header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 10px;
-    width: 100%;
-    box-sizing: border-box;
-    margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 10px;
 }
 
 #state {
-    font-size: 20px;
-    color: var(--off);
-    margin: 10px;
+  font-size: 20px;
+  color: var(--off);
+  margin: 10px;
 }
 
 .header h1 {
-    font-size: 24px;
-    margin: 0;
-    padding: 10px;
-    color: var(--text);
-    align-content: flex-start;
+  font-size: 24px;
+  margin: 0;
+  padding: 10px;
+  color: var(--text);
+  align-content: flex-start;
+}
+
+h4 {
+  font-size: 10rem;
+  margin-bottom: 5px;
 }
 
 .off-span.hidden {
-    display: none;
+  display: none;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 #default-view {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
 
-    justify-content: center;
-    align-content: center;
+  justify-content: center;
+  align-content: center;
 }
 
 #default-view.hidden {
-    display: none;
+  display: none;
 }
 
 #locked-view {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
 }
 
 #locked-view.hidden {
-    display: none;
+  display: none;
 }
 
 #leisure-view {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    justify-content: center;
-    align-content: center;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-content: center;
 }
 
 #leisure-view.hidden {
-    display: none;
+  display: none;
 }
 
 .sub-header {
-    font-size: 24px;
-    color: var(--accent);
-    text-align: center;
-    justify-content: center;
+  font-size: 24px;
+  color: var(--accent);
+  text-align: center;
+  justify-content: center;
 }
 
 .slider-text {
-    font-size: 20px;
-    color: var(--text);
-    margin: 5px 0;
+  font-size: 20px;
+  color: var(--text);
+  margin: 5px 0;
 }
 
 #unlock-question {
-    color: var(--text);
-    font-size: 12px;
+  color: var(--text);
+  font-size: 12px;
 }
 .off-span {
-    display: block;
-    justify-content: center;
-    align-content: center;
-    text-align: center;
-    font-size: large;
-    padding: 50px;
-    font-size: 24px;
-    color: var(--off);
+  display: block;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  font-size: large;
+  padding: 50px;
+  font-size: 24px;
+  color: var(--off);
 }
 
-
 .toggle-buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 10px;
-    width: 100%;
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 20px;
+  padding-top: 0;
+  margin-top: 0;
 }
 
 #power-toggle {
-    padding: 15px 40px;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    border: none;
-    border-radius: 8px;
-    align-content: flex-end;
-    transition: all 0.3s ease;
-    /* Makes the "glow" fade in smoothly */
-    outline: none;
-    margin: 10px;
+  padding: 15px 40px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  align-content: flex-end;
+  transition: all 0.3s ease;
+  /* Makes the "glow" fade in smoothly */
+  outline: none;
+  margin: 10px;
 }
 
 .off {
-    background-color: #e74c3c;
-    color: white;
+  background-color: #e74c3c;
+  color: white;
 }
 
 .on {
-    background-color: #2ecc71;
-    color: white;
-    box-shadow: 0 0 20px #2ecc71;
-    /* Creates the "glow" effect */
-    transform: translateY(-2px);
+  background-color: #2ecc71;
+  color: white;
+  box-shadow: 0 0 20px #2ecc71;
+  /* Creates the "glow" effect */
+  transform: translateY(-2px);
 }
 
 #power-toggle:active {
-    transform: translateY(2px);
-    box-shadow: 0 0px #2ecc71;
-    /* Lifts the button slightly on hover */
+  transform: translateY(2px);
+  box-shadow: 0 0px #2ecc71;
+  /* Lifts the button slightly on hover */
 }
 
 .toggle-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 10px;
-    width: 100%;
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 20px;
 }
 
 .switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-    margin: 10px;
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  margin: 10px;
 }
 
 .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 
 .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: .4s;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
 }
 
 .slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: .4s;
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
 }
 
-input:checked+.slider {
-    background-color: var(--accent);
+input:checked + .slider {
+  background-color: var(--accent);
 }
 
-input:checked+.slider:before {
-    transform: translateX(26px);
+input:checked + .slider:before {
+  transform: translateX(26px);
 }
 
 .slider.round {
-    border-radius: 34px;
+  border-radius: 34px;
 }
 
 .slider.round:before {
-    border-radius: 50%;
+  border-radius: 50%;
 }
 
 .secret {
-    margin: 5px;
-    font-size: 12px;
+  margin: 5px;
+  font-size: 12px;
 }
 
 #lockin-button-container {
-    background-color: #777;
-    width: 100%;
-    height: auto;
+  background-color: #777;
+  width: 100%;
+  height: auto;
 }
 
+.timer-container {
+  text-align: center;
+  background: var(--background);
+  padding: 5px 20px;
+  border-radius: 10px;
+  box-shadow:
+    0,
+    4px 6px,
+    rgba(0, 0, 0, 0.1);
+}
+
+/*
+COUNTDOWN TIMER
+*/
 #timer {
-    font-size: 36px;
-    font-weight: bold;
-    color: var(--text);
-    margin-bottom: 20px;
-    text-align: center;
+  font-size: 36px;
+  font-weight: bold;
+  color: var(--text);
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .timer-button-flex {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    gap: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 20px;
 }
 
 .timer-buttons {
-    padding: 16px;
-    font-size: 16px;
-    align-items: center;
-    justify-content: center;
-    border-radius: 1000px;
+  padding: 16px;
+  font-size: 16px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1000px;
 }
 
 .timer-buttons:hover {
-    background-color: black;
-    color: white;
+  background-color: black;
+  color: white;
+}
+
+#countdown {
+  font-size: 3rem;
+  font-weight: bold;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.input-section {
+  margin-bottom: 5px;
+  font-size: 1rem;
+  color: #df0000;
+}
+
+.timer-labels {
+  font-size: 0.5rem;
+}
+
+#minutes {
+  width: 100px;
+  padding: 2px;
+  font-size: 1rem;
+}
+
+#countdown-display {
+  margin-bottom: 5px;
+  font-size: 3rem;
+  font-weight: bold;
+  transform: translateY(-50px);
 }

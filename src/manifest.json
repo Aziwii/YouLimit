@@ -6,27 +6,30 @@
     "declarativeNetRequest",
     "storage",
     "scripting",
-    "tabs"
+    "tabs",
+    "alarms"
   ],
-  "host_permissions": [
-    "*://*.youtube.com/*"
-  ],
+  "host_permissions": ["*://*.youtube.com/*", "https://www.googleapis.com/*"],
   "background": {
     "service_worker": "scripts/background.js"
   },
 
   "declarative_net_request": {
-    "rule_resources": [{
-      "id": "ruleset_1",
-      "enabled": true,
-      "path": "rules/rules.json"
-    }]
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules/rules.json"
+      }
+    ]
   },
-  "content_scripts": [{
-    "matches": ["*://*.youtube.com/*"],
-    "js": ["scripts/config.js","scripts/content.js"],
-    "css": ["styles/content.css"]
-  }],
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "js": ["scripts/config.js", "scripts/content.js"],
+      "css": ["styles/content.css"]
+    }
+  ],
   "action": {
     "default_title": "YouLimit",
     "default_popup": "scripts/popup.html"
